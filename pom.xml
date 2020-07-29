@@ -25,9 +25,12 @@
     <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
     <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
     <webjars-jquery.version>2.2.4</webjars-jquery.version>
-   <wro4j.version>1.9.0</wro4j.version> 
+    <wro4j.version>1.9.0</wro4j.version>
 
-    <jacoco.version>0.8.2</jacoco.version>
+  
+    <jacoco.version>0.8.5</jacoco.version>
+    <nohttp-checkstyle.version>0.0.4.RELEASE</nohttp-checkstyle.version>
+    <spring-format.version>0.0.21</spring-format.version>
 
   </properties>
 
@@ -37,7 +40,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
@@ -113,6 +115,41 @@
 
   <build>
     <plugins>
+    <!--  <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.29</version>
+          </dependency>
+          <dependency>
+            <groupId>io.spring.nohttp</groupId>
+            <artifactId>nohttp-checkstyle</artifactId>
+            <version>${nohttp-checkstyle.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>nohttp-checkstyle-validation</id>
+            <phase>validate</phase>
+            <configuration>
+              <configLocation>src/checkstyle/nohttp-checkstyle.xml</configLocation>
+              <suppressionsLocation>src/checkstyle/nohttp-checkstyle-suppressions.xml</suppressionsLocation>
+              <encoding>UTF-8</encoding>
+              <sourceDirectories>${basedir}</sourceDirectories>
+              <includes>**/*</includes>
+              <excludes>**/.git/**/*,**/.idea/**/*,**/target/**/,**/.flattened-pom.xml,**/*.class</excludes>
+            </configuration>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin> -->
+    
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -157,18 +194,6 @@
       <!-- Spring Boot Actuator displays build-related information if a git.properties
         file is present at the classpath -->
       <plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-compiler-plugin</artifactId>
-	<configuration>
-		<source>${java-version}</source>
-		<target>${java-version}</target>
-		<verbose>true</verbose>
-		<fork>true</fork>
-		<executable>/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/bin/javac</executable>
-		<compilerVersion>1.8</compilerVersion>
-	</configuration>
-</plugin>
-      <plugin>
         <groupId>pl.project13.maven</groupId>
         <artifactId>git-commit-id-plugin</artifactId>
         <executions>
@@ -189,9 +214,9 @@
       </plugin>
 
      <plugin>
-       <groupId>ro.isdc.wro4j</groupId>
+        <groupId>ro.isdc.wro4j</groupId>
         <artifactId>wro4j-maven-plugin</artifactId>
-        <version>1.9.0</version> 
+        <version>${wro4j.version}</version>
         <executions>
           <execution>
             <phase>generate-resources</phase>
@@ -199,27 +224,27 @@
               <goal>run</goal>
             </goals>
           </execution>
-	</executions>
+        </executions>
         <configuration>
           <wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
           <cssDestinationFolder>${project.build.directory}/classes/static/resources/css</cssDestinationFolder>
           <wroFile>${basedir}/src/main/wro/wro.xml</wroFile>
           <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
           <contextFolder>${basedir}/src/main/less</contextFolder>
-        </configuration> 
+        </configuration>
         <dependencies>
-         <dependency>
+          <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>${webjars-bootstrap.version}</version>
           </dependency>
-         <dependency>
+          <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.18.0</version> 
-          </dependency> 
-	     </dependencies>
-      </plugin>
+            <version>2.18.0</version>
+          </dependency>
+        </dependencies>
+      </plugin> 
     </plugins>
   </build>
 
